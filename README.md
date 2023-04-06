@@ -1,5 +1,4 @@
-# AML_Project
-Web Application
+# AML_Project (Web Application)
 
 Function Description :
 
