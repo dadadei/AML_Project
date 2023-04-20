@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Details</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+  <h1>Please Confirm Your Information</h1>
+
+  <form id="personal-information" class="hidden" onsubmit="return handleSubmit(event)">
+    <label for="id-number">ID number</label>
+    <input type="text" id="id-number" name="id-number">
+    <br>
+    <br>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name">
+    <br>
+    <br>
+    <label for="dob">Date of Birth</label>
+    <input type="text" id="dob" name="dob">
+    <br>
+    <br>
+    <label for="gender">Gender</label>
+    <input type="text" id="gender" name="gender">
+    <br>
+    <br>
+    <label for="address">Address</label>
+    <input type="text" id="address" name="address">
+    <br>
+    <br>
+    <input type="submit" value="Submit">
+    <br> <br> <br>
+  </form>
+
+  <form id="banking-info" class="hidden" onsubmit="return handleSubmit(event)">
+    <label for="bank-name">Bank Name</label>
+    <input type="text" id="bank-name" name="bank-name">
+    <br>
+    <br>
+    <label for="bank-address">Bank Address</label>
+    <input type="text" id="bank-address" name="bank-address">
+    <br>
+    <br>
+    <label for="account-number">Account Number</label>
+    <input type="text" id="account-number" name="account-number">
+    <br>
+    <br>
+    <label for="transit-number">Transit Number</label>
+    <input type="text" id="transit-number" name="transit-number">
+    <br>
+    <br>
+    <label for="swift-code">Swift Code</label>
+    <input type="text" id="swift-code" name="swift-code">
+    <br>
+    <br>
+    <label for="canadian-clearing-code">Canadian Clearing Code</label>
+    <input type="text" id="canadian-clearing-code" name="canadian-clearing-code">
+    <br>
+    <br>
+    <label for="account-holder-name">Account Holder Name</label>
+    <input type="text" id="account-holder-name" name="account-holder-name">
+    <br>
+    <br>
+    <label for="account-holder-address">Account Holder Address</label>
+    <input type="text" id="account-holder-address" name="account-holder-address">
+    <br>
+    <br>
+    <input type="submit" value="Submit">
+    <br> <br> <br>
+  </form>
+
+  <script>
+    // Get the selected option from localStorage
+    const selectedOption = localStorage.getItem('selectedOption');
+
+    // Show the appropriate form based on the selected option
+    if (selectedOption === 'banking') {
+      document.getElementById('banking-info').classList.remove('hidden');
+    } else {
+      document.getElementById('personal-information').classList.remove('hidden');
+    }
+
+    function handleSubmit(event) {
+      // Prevent the form from being submitted using the default method
+      event.preventDefault();
+      // Get the correct form element
+      const form = selectedOption === 'banking' ? document.getElementById('banking-info') : document.getElementById('personal-information');
+      
+      // Check for empty fields
+      const inputs = form.querySelectorAll('input[type="text"]');
+      for (let input of inputs) {
+        if (input.value.trim() === '') {
+          alert('Please fill out all fields before submitting the form.');
+          return;
+        }
+      }
+
+      // Handle form submission or data processing here
+      
+      // For example, a success message:
+      alert('Form submitted successfully!');
+      // Redirect to the home page
+      window.location.href = 'selection.html';
+    }
+
+    // Read JSON data from a file or URL
+    async function fetchJsonData(filePath) {
+      try {
+        const response = await fetch(filePath);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error fetching JSON data:', error);
+        return null;
+      }
+    }
+
+    // Populate form fields with JSON data
+    async function populateFields() {
+      // Path to JSON file
+      const jsonFilePath = 'data.json';
+      const data = await fetchJsonData(jsonFilePath);
+
+      if (data) {
+        Object.keys(data).forEach(key => {
+          const field = document.getElementById(key.toLowerCase());
+          if (field) {
+            field.value = data[key];
+          }
+        });
+      }
+    }
+
+    populateFields();
+  </script>
+</body>
+</html>
