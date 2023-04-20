@@ -1,0 +1,52 @@
+<!-- Selection page where user chooses the document type -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Uploading and Text Extraction</title>
+<style>
+   /* Styling for the page */
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    margin-bottom: 7px;
+    cursor: pointer;
+  }
+  li:hover {
+    background-color: #ddd;
+  }
+</style>
+
+</head>
+<body>
+<h1>Welcome to the Application</h1>
+<p>Select an option:</p>
+<button onclick="selectOption('personal')">Passport</button>
+<button onclick="selectOption('personal')">Driver's License</button>
+<button onclick="selectOption('personal')">National Identity Card</button>
+<button onclick="selectOption('banking')">Banking Information</button>
+
+<script>
+  // JavaScript function to handle user's selection and redirect to the upload page
+function selectOption(option) {
+  // Store the selected option in localStorage
+  localStorage.setItem('selectedOption', option);
+
+  // Redirect to the next page
+  window.location.href = 'upload.html';
+}
+</script>
+
+</body>
+</html>
