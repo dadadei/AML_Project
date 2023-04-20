@@ -1,0 +1,80 @@
+<!-- Upload page where user uploads an image -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Image</title>
+<style>
+   /* Styling for the page */
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  input[type="file"] {
+    display: none;
+  }
+  label {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+  }
+  label:hover {
+    background-color: #45a049;
+  }
+  #file-name {
+    margin-top: 10px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<h1>Upload An Image</h1>
+<form id="upload-form" onsubmit="return handleUpload(event)">
+  <label for="file-upload">
+    Upload
+  </label>
+  <input type="file" name="image" id="file-upload" accept="image/*" required>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+<p id="file-name"></p>
+
+  <script>
+    // JavaScript functions to handle image upload and display the selected file name
+    function handleUpload(event) {
+      // Prevent the form from being submitted using the default method
+      event.preventDefault();
+      // Get the file input element
+      const fileInput = document.getElementById('file-upload');
+
+      // Check if a file is selected
+      if (fileInput.files.length > 0) {
+        // Get the selected file
+        const file = fileInput.files[0];
+        // Save the file name to localStorage
+        localStorage.setItem('uploadedFile', file.name);
+        // Redirect to the next page
+        window.location.href = 'confirmation.html';
+      } else {
+        alert('Please select a file to upload.');
+      }
+    }
+
+    // Display the selected file name
+    document.getElementById('file-upload').addEventListener('change', (event) => {
+      const fileNameElement = document.getElementById('file-name');
+      if (event.target.files.length > 0) {
+        fileNameElement.textContent = `Selected file: ${event.target.files[0].name}`;
+      } else {
+        fileNameElement.textContent = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
